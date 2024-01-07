@@ -11,11 +11,9 @@ export function isEmpty() {
 }
 
 export function getBase64() {
-    return signaturePad.toDataURL("image/jpeg");
+    return signaturePad.toDataURL().split(',')[1];//Promise.resolve (signaturePad.toDataURL("image/jpeg"));
 }
 
 export function alerta(message) {
     alert(message);
 }
-
-

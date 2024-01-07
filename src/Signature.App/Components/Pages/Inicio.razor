@@ -1,7 +1,7 @@
 ﻿@page "/"
 @inject NavigationManager NavigationManager;
 
-<div style="display:flex;flex-direction:column;height:80vh;width:70vw;">
+<div style="display:flex;flex-direction:column;align-items:center;">
 
 
     <div style="height:100%;">
@@ -21,7 +21,7 @@
             </header>
             <div class="card-content">
                 <div class="content">
-                    <div class="card field">
+                    <a @onclick="()=>DigitarCodigoDeBarras()" class="card field">
                         <header class="card-header">
                             <p class="card-header-title" style="display:flex;justify-items:center">
                                 <span class="icon mr-4">
@@ -29,16 +29,11 @@
                                 </span>
                                 Escanear Código de Barras
                             </p>
-                            <button class="card-header-icon" aria-label="more options" @onclick="()=>DigitarCodigoDeBarras()">
-                                <span class="icon">
-                                    <i class="fas fa-angle-down" aria-hidden="true"></i>
-                                </span>
-                            </button>
                         </header>
-                    </div>
+                    </a>
                 </div>
                 <div class="content">
-                    <div class="card field">
+                    <a @onclick="()=>DigitarCodigoDeBarras(true)" class="card field">
                         <header class="card-header">
                             <p class="card-header-title" style="display:flex;justify-items:center">
                                 <span class="icon mr-4">
@@ -46,13 +41,8 @@
                                 </span>
                                 Digitar Código de Barras
                             </p>
-                            <button class="card-header-icon" aria-label="more options" @onclick="()=>DigitarCodigoDeBarras(true)">
-                                <span class="icon">
-                                    <i class="fas fa-angle-down" aria-hidden="true"></i>
-                                </span>
-                            </button>
                         </header>
-                    </div>
+                    </a>
                 </div>
                 </div>
             </div>
