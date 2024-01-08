@@ -1,0 +1,88 @@
+﻿@inject NotificationService NotificationService;
+
+<div class="notification" @onclick="Dismiss">
+    @if (!string.IsNullOrEmpty(Message))
+    {
+        <div class="notification-content @Type.ToString().ToLower()">
+            @if (!string.IsNullOrEmpty(Title))
+            {
+                <strong>@Title</strong>
+            }
+            <p>@Message</p>
+        </div>
+    }
+</div>
+
+@code {
+
+
+    private string Message { get; set; }
+    private string Title { get; set; }
+    private NotificationType Type { get; set; }
+
+    protected override void OnInitialized()
+    {
+        NotificationService.OnNotify += Notify;
+    }
+
+    private void Notify(string message, string title, NotificationType type)
+    {
+        Message = message;
+        Title = title;
+        Type = type;
+
+        StateHasChanged();
+
+        // Auto dismiss after a few seconds (adjust as needed)
+        Task.Delay(5000).ContinueWith(_ =>
+        {
+            Dismiss();
+        });
+    }
+
+    private void Dismiss()
+    {
+        Message = null;
+        Title = null;
+        Type = NotificationType.Info;
+
+        StateHasChanged();
+    }
+}
+
+<style>
+    .notification {
+        position: fixed;
+        top: 70px;
+        right: 20px;
+        max-width: 300px;
+        cursor: pointer;
+    }
+
+    .notification-content {
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .info {
+        background-color: #3498db;
+        color: #fff;
+    }
+
+    .success {
+        background-color: #2ecc71;
+        color: #fff;
+    }
+
+    .warning {
+        background-color: #e67e22;
+        color: #fff;
+    }
+
+    .error {
+        background-color: #e74c3c;
+        color: #fff;
+    }
+</style>

@@ -1,5 +1,6 @@
 ﻿@page "/nota-fiscal/enviar-foto-comprovante"
 @inject NavigationManager NavigationManager;
+@inject NotificationService NotificationService
 
 <div style="display:flex;flex-direction:column;align-items:center;">
 @* <div style="display:flex;flex-direction:column;height:80vh;width:70vw;"> *@
@@ -28,8 +29,6 @@
                             </p>
                         </header>
                     </a>
-                    @if (!string.IsNullOrEmpty(PhotoBase64))
-                    {
                         <div class="card field">
                             <header class="card-header">
                                 <div class="card-content">
@@ -48,8 +47,6 @@
                                 </span>
                             </button>
                         </div>
-                    }
-
                 </div>
             </div>
         </div>
@@ -78,7 +75,12 @@
             }
         }
     }
+    protected override Task OnInitializedAsync()
+    {
+        TakePhotoAndGenerateBase64();
 
+        return base.OnInitializedAsync();
+    }
 
     public async Task TakePhotoAndGenerateBase64()
     {
@@ -103,7 +105,15 @@
     }
     public void NextPage()
     {
-        NavigationManager.NavigateTo($"/nota-fiscal/responsavel-retirada?BarCode={BarCode}&Base64Img={PhotoBase64Src}");
+        if (string.IsNullOrEmpty(PhotoBase64Src) && PhotoBase64Src.Length > 2)
+        {
+
+            NavigationManager.NavigateTo($"/nota-fiscal/responsavel-retirada?BarCode={BarCode}&Base64Img={PhotoBase64Src}");
+        }else
+        {
+            NotificationService.Notify("Sem dados", "Tire uma foto para continuar", NotificationType.Error);
+        }
+
        
     }
 }

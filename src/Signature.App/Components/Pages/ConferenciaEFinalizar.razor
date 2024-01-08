@@ -1,5 +1,7 @@
 ﻿@page "/nota-fiscal/conferir-finalizar-manifesto"
+
  @inject NavigationManager NavigationManager;
+ @inject NotificationService NotificationService
 
 <div style="display:flex;flex-direction:column;align-items:center;">
 
@@ -19,32 +21,40 @@
             </header>
 
             <div class="card-content">
-                <div class="media">
-                    <div class="media-left">
-                        <figure class="image">
-                            <img src="@Base64Img"/> 
-                        </figure>
-                    </div>
+
+                    <p class="title is-4">Chave NF:</p>
+                    <p class="subtitle is-6">35231202314269000178550000001321461017567781</p>
+
+            </div>
+                @*      <div class="media">
+                <div class="media-left">
+                <figure class="image">
+                <img src="@Base64Img" />
+                </figure>
                 </div>
-                <div class="media-content">
+                </div> *@
+            <div class="card-content">
+
                     <p class="subtitle is-6">Retirado por:</p>
                     <p class="title is-4">@Nome</p>
-                </div>
-                <div class="media-content">
+
+            </div>
+            <div class="card-content">
+    
                     <p class="subtitle is-6">Documento:</p>
                     <p class="title is-4">@DocumentoRetirada</p>
-                </div>
-                <div class="media-content">
+ 
+            </div>
+            <div class="card-content">
+       
                     <p class="subtitle is-6">Data retirada:</p>
                     <p class="title is-4">@retirada</p>
-                </div>
-                <div class="card-content">
-                    <div class="content">
-                    </div>
-                </div>
+
+            </div>
+          
             </div>
         </div>
-    </div>
+   
 
     <div style="height:100%;">
         <div class="card-content">
@@ -79,7 +89,7 @@
     public string? NomeCliente { get; set; }
 
     DateTime retirada = DateTime.Now;
-  
+
 
 
     public string Nome
@@ -116,7 +126,8 @@
 
     public void Finalizar()
     {
+        NotificationService.Notify("Comprovante manifestado.", "Enviado comprovante de entrega com sucesso", NotificationType.Success);
+
         NavigationManager.NavigateTo("/");
     }
-
-    }
+}

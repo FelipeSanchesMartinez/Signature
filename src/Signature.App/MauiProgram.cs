@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Signature.App.Components.Notification;
 using ZXing.Net.Maui.Controls;
 
 namespace Signature.App
@@ -19,6 +20,7 @@ namespace Signature.App
             builder.Services.AddMauiBlazorWebView();
 
             builder.Services.AddHttpClient("api", client => client.BaseAddress = new Uri("https://localhost:7051/api/"));
+            builder.Services.AddSingleton<NotificationService>();
 
 
 #if DEBUG
